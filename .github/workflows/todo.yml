@@ -19,7 +19,8 @@ jobs:
       - name: Build Docker image
         run: docker build -t ai-todo-list .
 
-
       - name: Test Docker image
-        run: docker run --rm --secret openai_api_key ai-todo-list python -m unittest todo_test.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: docker run --rm -e OPENAI_API_KEY ai-todo-list python -m unittest todo_test.py
 
