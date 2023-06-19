@@ -8,19 +8,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.8
-    - name: Set environment variable
-      run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install Flask openai requests
-    - name: Run tests
-      run: |
-        python -m unittest todo_test.py
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+
+      - name: Build Docker image
+        run: docker build -t ai-todo-list .
+
+      - name: Test Docker image
+        run: docker run --rm ai-todo-list python -m unittest todo_test.py
