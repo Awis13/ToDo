@@ -21,4 +21,5 @@ jobs:
 
 
       - name: Test Docker image
-        run: docker run --rm ai-todo-list python -m unittest todo_test.py
+        run: docker run --rm --secret openai_api_key ai-todo-list python -m unittest todo_test.py
+
