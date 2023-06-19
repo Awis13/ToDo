@@ -38,6 +38,7 @@ def generate():
     message = generate_response(prompt)
     return message
 
+
 @app.route('/tasks', methods=['POST'])
 def create_task():
     task_data = request.get_json()
