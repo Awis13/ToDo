@@ -19,5 +19,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t ai-todo-list .
 
+
       - name: Test Docker image
         run: docker run --rm ai-todo-list python -m unittest todo_test.py
