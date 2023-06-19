@@ -38,10 +38,12 @@ def generate():
     message = generate_response(prompt)
     return message
 
-
 @app.route('/tasks', methods=['POST'])
 def create_task():
     task_data = request.get_json()
+    required_fields = ['title', 'description', 'due_date', 'priority']
+    if not all(field in task_data for field in required_fields):
+        return 'Bad Request: Missing required field', 400
     task = Task(task_data['title'], task_data['description'], task_data['due_date'], task_data['priority'])
     tasks.append(task)
     return task.__dict__, 201
