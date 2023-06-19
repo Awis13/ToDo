@@ -1,18 +1,17 @@
-FROM python:3.9
+# Use the official Python base image
+FROM python:3.9-slim
 
-# Your existing Dockerfile instructions
-
-# Copy frontend files
-COPY frontend /app/frontend
-
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Install dependencies
-RUN pip install -r frontend/requirements.txt
+# Copy the requirements file
+COPY requirements.txt .
 
-# Expose the desired port
-EXPOSE 5000
+# Install the project dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Start the application
-CMD ["python", "app.py"]
+# Copy the application code into the container
+COPY . .
+
+# Set the container command to run the Flask application
+CMD [ "python", "app.py" ]
