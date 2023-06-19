@@ -9,7 +9,7 @@ COPY frontend /app/frontend
 WORKDIR /app
 
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN pip install -r frontend/requirements.txt
 
 # Expose the desired port
 EXPOSE 5000
