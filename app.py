@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import openai
 import os
 
@@ -30,6 +30,13 @@ def generate_response(prompt):
 
     message = response.choices[0].message['content']
     return message
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # Route for natural language processing
 @app.route('/generate', methods=['POST'])
