@@ -35,9 +35,6 @@ def generate_response(prompt):
 def index():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
 # Route for natural language processing
 @app.route('/generate', methods=['POST'])
 def generate():
