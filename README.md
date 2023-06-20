@@ -16,7 +16,10 @@ Install the required Python packages using pip:
 ```shell
 pip install -r requirements.txt
 ```
-Set your OpenAI API key as an environment variable: export OPENAI_API_KEY=your-api-key
+Set your OpenAI API key as an environment variable: 
+```shell
+export OPENAI_API_KEY=your-api-key
+```
 Run the Flask application: python app.py
 Open your web browser and navigate to http://localhost:5000 to see the application in action.
 Docker
