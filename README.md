@@ -20,7 +20,10 @@ Docker
 
 ### The application can also be run using Docker. Here's how to build and run the Docker image:
 
-Build the Docker image: docker build -t ai-todo-list .
+Build the Docker image: 
+```bash
+docker build -t ai-todo-list .
+```
 Run the Docker container: 
 ```bash
 docker run --rm -e OPENAI_API_KEY -p 8080:5000 ai-todo-list python -m app
