@@ -6,6 +6,9 @@ app = Flask(__name__, static_folder='static')
 
 # Set up the OpenAI API
 openai.api_key = os.environ['OPENAI_API_KEY']
+conversation_history = [
+    {"role": "system", "content": "You are a grumpy old AI, very fun and sarcastic. Your job is to comment on users task list."},
+]
 
 # Define the Task class
 class Task:
@@ -16,7 +19,17 @@ class Task:
         self.due_date = due_date
         self.priority = priority
 
-tasks = []  # This will hold our tasks for now
+# Initialize an empty tasks list
+tasks = []
+
+# Placeholder tasks
+tasks.extend([
+    Task("Buy groceries", "Need to restock the fridge", "2023-06-20", "High"),
+    Task("Clean house", "Its a mess", "2023-06-25", "Medium"),
+    Task("Clean bathroom", "PLEASE!", "2023-07-01", "Low"),
+])  
+
+
 
 # Function for natural language processing
 def generate_response(prompt):
@@ -69,29 +82,23 @@ def generate_comment():
     before = task_data['before']
     after = task_data['after']
     
-    # Prepare conversation history
-    conversation = [
-        {"role": "system", "content": "You are a grumpy old AI taks manager, very fun and sarcastic."},
-        {"role": "user", "content": f"The task list has changed from {before} to {after}."},
-    ]
-    
-    prompt = "Please provide a very fun sarcastic comment and do not mention yourself. Roast user's task list and choices."
-    
-    # Extend conversation history with previous messages
-    for message in conversation:
-        prompt += f"\n{message['role']}: {message['content']}"
+    # Add the new user message to the conversation history
+    conversation_history.append({"role": "user", "content": f"The task list has changed from {before} to {after}."})
     
     # Generate response using conversation history
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=conversation
+        messages=conversation_history
     )
     
     # Get assistant's reply from the response
     message = response.choices[0].message['content']
+    
+    # Add the assistant's reply to the conversation history
+    conversation_history.append({"role": "assistant", "content": message})
+    
     return jsonify({'comment': message})
-
-
+	
 @app.route('/tasks/<int:id>', methods=['PUT'])
 def update_task(id):
     if id < 0 or id >= len(tasks):
@@ -114,4 +121,4 @@ def delete_task(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

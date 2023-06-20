@@ -16,18 +16,21 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.app.delete('/tasks/1')  # Clean up after test
 
-    def test_get_task(self):
-        self.app.post('/tasks', data=json.dumps({
-            'title': 'Test Task',
-            'description': 'This is a test task',
-            'due_date': '2023-06-19',
-            'priority': 'High'
-        }), content_type='application/json')
-        response = self.app.get('/tasks/1')
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.data)
-        self.assertEqual(data['title'], 'Test Task')
-        self.app.delete('/tasks/1')  # Clean up after test
+def test_get_task(self):
+    # Delete all tasks
+    for task in tasks[:]:
+        tasks.remove(task)
+
+    # Add the test task
+    task = Task('Test Task', '', '', '')
+    tasks.append(task)
+
+    # Now get the task
+    response = self.app.get('/tasks/1', follow_redirects=True)
+    self.assertEqual(response.status_code, 200)
+    data = json.loads(response.get_data(as_text=True))
+    self.assertEqual(data['title'], 'Test Task')
+
 
     def test_delete_task(self):
         self.app.post('/tasks', data=json.dumps({
