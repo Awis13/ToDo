@@ -1,8 +1,8 @@
-### AI Todo List
+## AI Todo List
 
 This project is a simple Todo List application that uses OpenAI's GPT-3 to generate sarcastic comments about the tasks you add or remove. The application is built with Flask for the backend and plain JavaScript for the frontend.
 
-## Features
+### Features
 
 Add tasks to your todo list
 Delete tasks from the list
@@ -18,16 +18,16 @@ Run the Flask application: python app.py
 Open your web browser and navigate to http://localhost:5000 to see the application in action.
 Docker
 
-## The application can also be run using Docker. Here's how to build and run the Docker image:
+### The application can also be run using Docker. Here's how to build and run the Docker image:
 
 Build the Docker image: docker build -t ai-todo-list .
 Run the Docker container: 
 ```bash
 docker run --rm -e OPENAI_API_KEY -p 8080:5000 ai-todo-list python -m app
 ```
-Testing
+## Testing
 
-## The application includes a basic test suite. You can run the tests with the following command: python -m unittest
+The application includes a basic test suite. You can run the tests with the following command: python -m unittest
 
 ## Future Improvements
 
