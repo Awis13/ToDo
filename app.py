@@ -77,10 +77,12 @@ def update_task(id):
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
 def delete_task(id):
-    if id < 0 or id >= len(tasks):
+    task = next((task for task in tasks if task.id == id), None)
+    if task is None:
         return 'Task not found', 404
-    del tasks[id]
+    tasks.remove(task)
     return '', 204
+
 
 if __name__ == '__main__':
     app.run(debug=True)
