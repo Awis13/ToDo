@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import openai
 import os
 
@@ -54,14 +54,43 @@ def create_task():
 
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
-    return [task.__dict__ for task in tasks], 200
+    return jsonify([task.__dict__ for task in tasks]), 200
 
 @app.route('/tasks/<int:id>', methods=['GET'])
 def get_task(id):
     task = next((task for task in tasks if task.id == id), None)
     if task is None:
         return 'Task not found', 404
-    return task.__dict__, 200
+    return jsonify(task.__dict__), 200
+
+@app.route('/generate_comment', methods=['POST'])
+def generate_comment():
+    task_data = request.get_json()
+    before = task_data['before']
+    after = task_data['after']
+    
+    # Prepare conversation history
+    conversation = [
+        {"role": "system", "content": "You are a grumpy old AI taks manager, very fun and sarcastic."},
+        {"role": "user", "content": f"The task list has changed from {before} to {after}."},
+    ]
+    
+    prompt = "Please provide a very fun sarcastic comment and do not mention yourself. Roast user's task list and choices."
+    
+    # Extend conversation history with previous messages
+    for message in conversation:
+        prompt += f"\n{message['role']}: {message['content']}"
+    
+    # Generate response using conversation history
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=conversation
+    )
+    
+    # Get assistant's reply from the response
+    message = response.choices[0].message['content']
+    return jsonify({'comment': message})
+
 
 @app.route('/tasks/<int:id>', methods=['PUT'])
 def update_task(id):
@@ -73,7 +102,7 @@ def update_task(id):
     task.description = task_data['description']
     task.due_date = task_data['due_date']
     task.priority = task_data['priority']
-    return task.__dict__, 200
+    return jsonify(task.__dict__), 200
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
 def delete_task(id):
