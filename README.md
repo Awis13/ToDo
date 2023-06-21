@@ -42,7 +42,10 @@ docker run --rm -e OPENAI_API_KEY -p 8080:5000 ai-todo-list python -m app
 ```
 ## Testing
 
-The application includes a basic test suite. You can run the tests with the following command: python -m unittest
+The application includes a basic test suite. You can run the tests with the following command: 
+```shell
+python -m unittest
+```
 
 ### Future Improvements
 
