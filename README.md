@@ -9,7 +9,8 @@ Delete tasks from the list
 On every task addition or deletion, the application generates a sarcastic comment about your tasks
 The comments are displayed in a stack from the latest to the oldest, with a maximum of 5 comments displayed at a time
 The application checks the task list on every browser refresh and generates a comment about it
-Setup
+
+### Setup
 
 Clone the repository to your local machine.
 Install the required Python packages using pip: 
@@ -20,9 +21,14 @@ Set your OpenAI API key as an environment variable:
 ```shell
 export OPENAI_API_KEY=your-api-key
 ```
-Run the Flask application: python app.py
+Run the Flask application: 
+```shell 
+python app.py
+```
+
 Open your web browser and navigate to http://localhost:5000 to see the application in action.
-Docker
+
+### Docker
 
 ### The application can also be run using Docker. Here's how to build and run the Docker image:
 
@@ -42,4 +48,4 @@ The application includes a basic test suite. You can run the tests with the foll
 
 Improve the UI with a modern frontend framework like React or Vue.js
 Persist the tasks and comments in a database
-Add user authentication to allow multiple users to have their own todo lists# ToDo
+Add user authentication to allow multiple users to have their own todo lists
