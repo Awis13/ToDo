@@ -15,8 +15,6 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
 
-      - name: Initialize Database
-        run: docker exec CONTAINER_ID your-db-init-command
 
       - name: Build Docker image
         run: docker build -t ai-todo-list .
