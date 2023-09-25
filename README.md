@@ -1,6 +1,7 @@
 ## AI Todo List
 
 This project is a simple Todo List application that uses OpenAI's GPT-3 to generate sarcastic comments about the tasks you add or remove. The application is built with Flask for the backend and plain JavaScript for the frontend.
+[Live Demo on Heroku](https://ai-to-do-e48906e0b687.herokuapp.com)
 
 ### Features
 
@@ -38,7 +39,7 @@ docker build -t ai-todo-list .
 ```
 Run the Docker container: 
 ```bash
-docker run --rm -e OPENAI_API_KEY -p 8080:5000 ai-todo-list python -m app
+docker run --rm -e OPENAI_API_KEY -p 8080:8080 ai-todo-list python -m app
 ```
 ## Testing
 
@@ -46,6 +47,29 @@ The application includes a basic test suite. You can run the tests with the foll
 ```shell
 python -m unittest
 ```
+### CI/CD Pipeline
+
+Ah, the pièce de résistance! Automate all the things!
+
+GitHub Actions: This project uses GitHub Actions for Continuous Integration. Check .github/workflows/python-app.yml for the workflow configuration.
+Heroku Deployment: The app is automatically deployed to Heroku when changes are pushed to the main branch.
+GitHub Actions Setup
+
+1. In your GitHub repository, navigate to the Actions tab.
+2. Create a new workflow or modify the existing .github/workflows/python-app.yml.
+3. Add the following environment variable to the workflow file:
+
+```yaml
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+```
+
+Heroku Deployment Steps
+
+1. Create a new Heroku app.
+2. Connect your GitHub repository to the Heroku app.
+3. Enable automatic deploys from the main branch.
+4. Add the OpenAI API key to Heroku Config Vars.
 
 ### Future Improvements
 
